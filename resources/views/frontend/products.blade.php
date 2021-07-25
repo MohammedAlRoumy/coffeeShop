@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="page-title">
-                        <h2>المنتجات</h2>
+                        <h2>المنتجات {{ @request()->category_name ?? '' }} {{ @request()->favorite ? 'المفضلة' :'' }}</h2>
                     </div>
                 </div>
             </div>
@@ -24,13 +24,13 @@
                 <div class="row">
                     <div class="collection-content col">
                         <div class="page-main-content">
-                            <div class="row">
+                            <div class="row {{ request()->favorite ? 'favorite' : '' }}">
                                 <div class="col-sm-12">
                                     <div class="collection-product-wrapper">
                                         <div class="product-wrapper-grid ">
                                             <div class="row margin-res">
                                                 @foreach($products as $product)
-                                                <div class="col-xl-3 col-6 col-grid-box">
+                                                <div class="product col-xl-3 col-6 col-grid-box">
                                                     <div class="product-box">
                                                             <div class="img-wrapper">
                                                                 <div class="front">

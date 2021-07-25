@@ -146,7 +146,7 @@
 
                     <div class="menu-left">
                         <div>
-                            <a href="#"><img src="{{asset('uploads/settings/'.config('settings.site_logo'))}}" width="60" height="40"
+                            <a href="{{route('home.index')}}"><img src="{{asset('uploads/settings/'.config('settings.site_logo'))}}" width="60" height="40"
                                              class="img-fluid blur-up lazyloaded" alt=""></a>
                         </div>
                     </div>
@@ -248,7 +248,7 @@
                     </div>
                     <div class="footer-contant">
                         <div class="footer-logo">
-                            <a href="#"><img src="{{asset('uploads/settings/'.config('settings.site_logo'))}}" width="60" height="40"
+                            <a href="{{route('home.index')}}"><img src="{{asset('uploads/settings/'.config('settings.site_logo'))}}" width="60" height="40"
                                              class="img-fluid blur-up lazyloaded" alt=""></a>
                         </div>
                         <p>قهوتنا هو متجر الكتروني مختص في بيع القهوة ومستلزماتها داخل اللملكة العربية السعودية ،
@@ -401,6 +401,7 @@
         }
         window.location = window.location + '?coupon=' + c;
     })
+
 </script>
 <script>
     $(document).ready(function () {
@@ -438,13 +439,13 @@
                 favCount > 9 ? $('#nav__fav-count').html('9+') : $('#nav__fav-count').html(favCount);
                 $('#nav__fav-count').data('fav-count', favCount)
 
-
                 // to remove books from favorite page when click unfavored book
-                if ($('.prodcut-' + productId).closest('.favorite').length) {
+                if ($('.product-' + productId).closest('.favorite').length) {
 
-                    $('.prodcut-' + prodcutId).closest('.book').remove();
+                    $('.product-' + productId).closest('.product').remove();
 
                 }//end of if
+
             });//end of ajax call
 
         }
@@ -457,9 +458,12 @@
 <script>
     $(document).ready(function () {
 
+        $('.product-box button .ti-shopping-cart').on('click', function() {
+
+        });
 
         $(document).on('click', '.product__add-cart', function () {
-            // alert('test');
+
             let url = $(this).find('.product__add-cart').data('url');
             let productId = $(this).find('.product__add-cart').data('product-id');
             let productName = $(this).find('.product__add-cart').data('product-name');
@@ -467,26 +471,26 @@
             let productQuantity = $(this).find('.product__add-cart').data('product-quantity');
 
 
-            addCart(url, productId, productName, productPrice, productQuantity);
+                addCart(url, productId, productName, productPrice, productQuantity);
 
-        });//end of on click fav icon
+
+                });
 
 
         function addCart(url, productId, productName, productPrice, productQuantity) {
 
+                $.ajax({
+                    url: url,
+                    data: {
+                        productId: productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity: productQuantity,
+                    },
+                    method: 'POST',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
 
-            $.ajax({
-                url: url,
-                data: {
-                    productId: productId,
-                    name: productName,
-                    price: productPrice,
-                    quantity: productQuantity,
-                },
-                method: 'POST',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-
-            });//end of ajax call
+                });//end of ajax call
 
         }
 

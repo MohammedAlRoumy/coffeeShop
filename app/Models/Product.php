@@ -74,6 +74,7 @@ class Product extends Model
 
     public function scopeWhenFavorite($query, $favorite)
     {
+
         return $query->when($favorite, function ($q) {
 
             return $q->whereHas('users', function ($qu) {
@@ -83,7 +84,7 @@ class Product extends Model
 
         });
 
-    }// end of scopeWhenFavorite
+}// end of scopeWhenFavorite
 
 
  /*   public function getImageAttribute($value)

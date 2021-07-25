@@ -25,10 +25,10 @@ class HomeController extends Controller
     {
         // return $request;
         $categories = Category::where('status',1)->with('products')->get();
-        $products = Product::all();
+        $products = Product::where('quantity', '>', 0)->get();
 
-        $products_low = Product::where('sale_price', '!=', null)->get();
-        $products_new = Product::orderby('created_at', 'desc')->take(10)->get();
+        $products_low = Product::where('quantity' , '>',  0)->where('sale_price', '!=', null)->get();
+        $products_new = Product::where('quantity', '>',  0)->orderby('created_at', 'desc')->take(10)->get();
         $sliders = Slider::all();
         $brands = Brand::all();
 
@@ -47,7 +47,7 @@ class HomeController extends Controller
     public function products()
     {
 
-        $products = Product::whenCategory(request()->category_name)
+        $products = Product::where('quantity' , '>',  0)->whenCategory(request()->category_name)
             ->whenFavorite(request()->favorite)->paginate();
 
 
@@ -78,7 +78,7 @@ class HomeController extends Controller
 
         $product = Product::findOrFail($id);
 
-        $related_products = Product::where('category_id',$product->category_id)
+        $related_products = Product::where('quantity' ,'>',  0)->where('category_id',$product->category_id)
             ->where('id','!=',$product->id)->latest()->take(6)->get();
 
         return view('frontend.product_details', compact('product','related_products'));
@@ -151,16 +151,22 @@ class HomeController extends Controller
         $product = Product::findOrFail($request->productId);
 
         if ($product->quantity > 0) {
-            Cart::add(array(
-                // 'id' => uniqid(),
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => $request->input('price'),
-                'quantity' => $request->input('quantity'),
-                'attributes' => array(),
-                'associatedModel' => $product
-            ));
+            if ($request->input('quantity') > $product->quantity) {
+
+                return redirect()->back()->with('error', 'الكمية المطلوبة أكبر من الكمية المتوفرة يتوفر من هذا المنتج فقط ' . $product->quantity);
+            }else{
+                Cart::add(array(
+                    // 'id' => uniqid(),
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $request->input('price'),
+                    'quantity' => $request->input('quantity'),
+                    'attributes' => array(),
+                    'associatedModel' => $product
+                ));
+            }
         } else {
+
             if ($request->expectsJson()) {
                 return ['error' => 'الكمية غير متوفرة حاليا'];
             }
@@ -174,7 +180,7 @@ class HomeController extends Controller
         if ($request->expectsJson()) {
             return ['added' => true,];
         }
-        return redirect()->back()->with('success', 'Item added to cart successfully.');
+        return redirect()->back()->with('success', 'تم إضافة المنتج للسلة بنجاح');
     }
 
     public function toggle_favorite(Product $product)

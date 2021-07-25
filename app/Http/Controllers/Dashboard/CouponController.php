@@ -39,7 +39,8 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request; 'name','code','expiry-date','discount','discount-type','status'
+         return $request;
+		//'name','code','expiry-date','discount','discount-type','status'
         $date = Carbon::now()->format('Y-m-d');
         $validated = $request->validate([
             'name' => 'required',

@@ -71,8 +71,8 @@
                                                                     @foreach ($brands as $brand)
 
                                                                         <option
-                                                                            @if($brand->id == old('brand_id',$product->brand->id)) selected
-                                                                            @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                                            @if(@$brand->id == old('brand_id',@$product->brand->id)) selected
+                                                                            @endif value="{{ @$brand->id }}">{{ @$brand->name }}</option>
 
                                                                     @endforeach
                                                                 </select>

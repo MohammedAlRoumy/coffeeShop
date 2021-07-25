@@ -181,7 +181,7 @@ class ProductController extends Controller
 
     public function saveProductImagesDB(Request $request)
     {
-
+		
         try {
             // save dropzone images
             if ($request->has('document') && count($request->document) > 0) {

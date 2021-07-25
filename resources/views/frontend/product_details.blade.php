@@ -19,6 +19,19 @@
     <section>
         <div class="collection-wrapper">
             <div class="container">
+
+                @if(Session::has('success'))
+                    <div class="alert alert-success text-right">
+                        {{Session::get('success')}}
+                    </div>
+                @endif
+
+                @if(Session::has('error'))
+                    <div class="alert alert-danger text-right">
+                        {{Session::get('error')}}
+                    </div>
+                @endif
+
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="product-slick">
@@ -102,11 +115,21 @@
                                 </div>
                                 <div class="border-product">
                                     <div class="product-icon">
-                                        <form class="d-inline-block">
-                                            <button class="wishlist-btn"><i class="fa fa-heart"></i>
-                                                <span class="title-font">إضافة للمفضلة</span>
-                                            </button>
-                                        </form>
+
+                                        @auth()
+                                            <a class="button product__fav-icon" title="إضافة للمفضلة">
+                                                <i class="fa {{$product->is_favored ? 'fa-heart':'fa-heart-o'}} fa-2x product__fav-icon product-{{$product->id}}"
+                                                   data-product-id="{{$product->id}}"
+                                                   data-url="{{route('product.toggle_favorite',$product->id)}}"
+                                                   aria-hidden="true"></i>
+                                                <span class="title-font" style="font-weight: 700">إضافة للمفضلة</span>
+                                            </a>
+                                        @else
+                                            <a href="{{route('login')}}" title="إضافة للمفضلة"><i
+                                                    class="ti-heart"
+                                                    aria-hidden="true"></i></a>
+                                        @endauth
+
                                     </div>
                                 </div>
                             </div>

@@ -72,35 +72,7 @@ class CheckoutController extends Controller
         return view('frontend.checkout', compact('countries', 'cities'));
     }
 
-    /*
-    public function couponCheck(Request $request){
 
-       // return $request;
-
-        $cities = City::all();
-        $countries = Country::all();
-
-        if($request['coupon']){
-            $coupon = Coupon::where('code',$request['coupon'])->first();
-            if(!$coupon){
-                redirect()->back()->with('error','coupon not valid');
-            }
-            $condition = new \Darryldecode\Cart\CartCondition(array(
-                'name' => 'Express Shipping $15',
-                'type' => 'shipping',
-                'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
-                'value' => '+15',
-                //'order' => 1 // the order of calculation of cart base conditions. The bigger the later to be applied.
-            ));
-            Cart::condition($condition);
-
-            //Cart::getSubTotal()
-            return view('frontend.checkout',compact('coupon','countries','cities'));
-        }
-
-        return view('frontend.checkout',compact('countries','cities'));
-    }
-    */
 
     public function placeOrder(Request $request)
     {
@@ -123,12 +95,11 @@ class CheckoutController extends Controller
 
             if ($order->payment_method == 'ميسر') {
 
+
                 return view('frontend.moyasar-payment', compact('order'));
             }
 
 
-            // return  $this->payPal;
-            //  return  $this->payPal->processPayment($order);
         }
 
         session()->flash('error', 'لا يمكن اتمام العملية ، لاتوجد منتجات في السلة لإتمام عملية الشراء');
@@ -227,20 +198,5 @@ class CheckoutController extends Controller
     }
 
 
-    /*  public function complete(Request $request)
-      {
-          $paymentId = $request->input('paymentId');
-          $payerId = $request->input('PayerID');
 
-          $status = $this->payPal->completePayment($paymentId, $payerId);
-
-          $order = Order::where('order_number', $status['invoiceId'])->first();
-          $order->status = 'processing';
-          $order->payment_status = 1;
-          $order->payment_method = 'PayPal -'.$status['salesId'];
-          $order->save();
-
-          Cart::clear();
-          return view('site.pages.success', compact('order'));
-      }*/
 }

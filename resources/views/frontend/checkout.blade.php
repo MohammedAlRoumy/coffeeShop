@@ -18,34 +18,6 @@
     <!-- section start -->
     <section class="section-b-space">
         <div class="container">
-            {{--
-                        <form action="{{route('coupon.check')}}">
-                            @csrf
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    @isset($coupon)
-                                        <input type="text" class="form-control @error('coupon') is-invalid @enderror" name="coupon"
-                                               placeholder="كود الخصم"   value="{{$coupon->code}}"  aria-label=""
-                                               aria-describedby="basic-addon1">
-                                        @error('coupon')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    @else
-                                        <input type="text" class="form-control @error('coupon') is-invalid @enderror" name="coupon"
-                                               placeholder="كود الخصم" value="" aria-label=""
-                                               aria-describedby="basic-addon1">
-                                        @error('coupon')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    @endisset
-                                    <button type="submit" id="coupon" class="btn-solid btn btn-sm">تحقق</button>
-
-                                </div>
-                            </div>
-                        </form>
-
-                        <hr>--}}
-
 
             @if (session()->has('success'))
                 <p class="alert alert-success">
@@ -74,24 +46,24 @@
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label" style="float: right">الاسم الاول</div>
                                         <input type="text" name="firstname" value="{{auth()->user()->firstname}}"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label" style="float: right">الاسم الاخير</div>
                                         <input type="text" name="lastname" value="{{auth()->user()->lastname}}"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
 
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label" style="float: right">الهاتف</div>
                                         <input type="text" name="phone" value="{{auth()->user()->phone}}"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
 
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label" style="float: right">البريد الالكتروني</div>
                                         <input type="text" name="email" value="{{auth()->user()->email}}"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
 
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
@@ -122,13 +94,13 @@
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label" style="float: right">العنوان</div>
                                         <input type="text" name="address" value="{{auth()->user()->address}}"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
 
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label" style="float: right">رمز البريد</div>
                                         <input type="text" name="post_code" value="{{auth()->user()->postcode}}"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
 
                                     <div class="form-group col-md-12 col-sm-6 col-xs-12">
@@ -219,8 +191,7 @@
                                                     <li>
                                                         <div class="radio-option">
                                                             <input type="radio" name="payment_method"
-                                                                   value="الدفع عند الاستلام"
-                                                                   onclick="document.getElementById('moyasar').style.display = 'none'"
+                                                                   value="الدفع عند الاستلام" checked
                                                                    id="payment-2">
                                                             <label for="payment-2">الدفع عند الاستلام</label>
                                                         </div>
@@ -228,32 +199,8 @@
 
                                                     <li>
                                                         <div class="radio-option paypal">
-                                                            <input type="radio" name="payment_method" value="ميسر" onclick="document.getElementById('moyasar').style.display = 'block'" id="payment-1">
+                                                            <input type="radio" name="payment_method" value="ميسر"  id="payment-1">
                                                             <label for="payment-1">ميسر</label>
-{{--
-                                                            <div class="row" style="display: none" id="moyasar">
-                                                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="field-label">الاسم في البطاقة</div>
-                                                                    <input type="text" value="" placeholder="" width="100%">
-                                                                </div>
-                                                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="field-label">رقم البطاقة</div>
-                                                                    <input type="text" value="" placeholder="" width="100%">
-                                                                </div>
-                                                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="field-label">رقم التحقق CVV</div>
-                                                                    <input type="text" value="" placeholder="" width="100%">
-                                                                </div>
-                                                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="field-label">الشهر</div>
-                                                                    <input type="number" value="" placeholder="" width="100%">
-                                                                </div>
-                                                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="field-label">السنة</div>
-                                                                    <input type="number" value="" placeholder="" width="100%">
-                                                                </div>
-                                                            </div>
---}}
                                                         </div>
                                                     </li>
                                                 </ul>

@@ -17,9 +17,21 @@
     <!-- breadcrumb end -->
 
 
+
     <!--section start-->
     <section class="cart-section section-b-space">
         <div class="container">
+            @if(Session::has('success'))
+                <div class="alert alert-success text-right">
+                    {{Session::get('success')}}
+                </div>
+            @endif
+
+            @if(Session::has('error'))
+                <div class="alert alert-danger text-right">
+                    {{Session::get('error')}}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-12">
                     <table class="table cart-table table-responsive-xs">

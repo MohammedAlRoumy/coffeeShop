@@ -161,10 +161,26 @@
                                                 class="img-fluid blur-up lazyload bg-img" alt=""></a>
                                     </div>
                                     <div class="cart-info cart-wrap">
-                                        <button data-toggle="modal" data-target="#addtocart" title="Add to cart"><i
-                                                class="ti-shopping-cart"></i></button>
-                                        <a href="javascript:void(0)" title="Add to Wishlist"><i class="ti-heart"
-                                                                                                aria-hidden="true"></i></a>
+                                        <button class="product__add-cart" title="إضافة للسلة">
+                                            <i class="ti-shopping-cart product__add-cart product-{{$product_new->id}}"
+                                               data-product-id="{{$product_new->id}}"
+                                               data-product-name="{{$product_new->name}}"
+                                               data-product-price="{{ $product_new->sale_price != '' ? $product_new->sale_price : $product_new->price }}"
+                                               data-product-quantity="1"
+                                               data-url="{{ route('product.add.cart')}}"
+                                            ></i>
+                                        </button>
+                                        @auth()
+                                            <a class="button product__fav-icon" title="إضافة للمفضلة">
+                                                <i class="fa {{$product_new->is_favored ? 'fa-heart':'fa-heart-o'}} product__fav-icon product-{{$product_new->id}}"
+                                                   data-product-id="{{$product_new->id}}"
+                                                   data-url="{{route('product.toggle_favorite',$product_new->id)}}"
+                                                   aria-hidden="true"></i>
+                                            </a>
+                                        @else
+                                            <a href="{{route('login')}}" title="إضافة للمفضلة"><i class="ti-heart"
+                                                                                                  aria-hidden="true"></i></a>
+                                        @endauth
                                     </div>
                                 </div>
                                 <div class="product-detail">
@@ -192,7 +208,7 @@
     <!-- Product slider end -->
 
     @foreach($categories as $category)
-        @if($category->products->count() > 0 )
+        @if($category->products->where('quantity', '>', 0)->count() > 0 )
             <!-- Product slider -->
             <section class="section-b-space j-box pets-box ratio_square">
                 <div class="container">

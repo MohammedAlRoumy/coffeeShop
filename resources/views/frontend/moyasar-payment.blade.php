@@ -22,11 +22,12 @@
                 <div class="col-lg-12 ">
                     <div class="row">
                         <div class="col-sm-12">
+
                             <form accept-charset="UTF-8" action="https://api.moyasar.com/v1/payments.html" method="POST">
                             @csrf
                                 <input type="hidden" name="callback_url" value="http://localhost/coffeeShop/public/payments_redirect/{{$order->id}}/" />
-                                <input type="hidden" name="publishable_api_key" value="pk_test_jkgSLzxCAU6rBb4u1XwMYFBqcNgPmatZBTrFwCE3" />
-                                <input type="hidden" name="amount" value="{{intval(Cart::getSubTotal())}}" />
+                                <input type="hidden" name="publishable_api_key" value="{{config('settings.moyasar_secret_key')}}" />
+                                <input type="hidden" name="amount" value="{{intval(Cart::getSubTotal() * 100 )}}" />
                                 <input type="hidden" name="source[type]" value="creditcard" />
 
                                 <div class="form-row">

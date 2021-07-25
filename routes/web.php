@@ -90,9 +90,9 @@ Route::prefix('admin')->group(function () {
 
 });
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');*/
 
 
 Route::prefix('')->group(function () {
